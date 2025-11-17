@@ -1,6 +1,86 @@
 ---
-title: "New file"
-description: "Description of your new file."
+title: "Waves — Authentication & First API Call"
+description: "This guide shows how to authenticate with the Waves API and make your very first request.  "
 ---
 
-hi
+# Waves — Authentication & First API Call
+
+This guide shows how to authenticate with the Waves API and make your very first request.  
+
+In less than a minute, you'll learn the headers, endpoint, and the sample request/response needed to get started.
+
+---
+
+## Endpoint  
+
+`POST https://api.wavesspeech.ai/v1/auth/login`  
+
+_(Replace with the actual Waves auth endpoint)_
+
+---
+
+## Required Headers
+
+- `Content-Type: application/json`
+
+- `Authorization: Bearer <API_KEY_GOES_HERE>`  
+
+  _(Use your API key; do not expose real keys in public docs)_
+
+---
+
+## Sample Request — cURL
+
+\`\`\`bash
+
+curl -X POST "https://api.wavesspeech.ai/v1/auth/login" \\
+
+  -H "Content-Type: application/json" \\
+
+  -H "Authorization: Bearer API_KEY_GOES_HERE" \\
+
+  -d '{
+
+        "email": "[your_email@example.com](mailto:your_email@example.com)",
+
+        "password": "your_password"
+
+      }'
+
+import requests
+
+url = "https://api.wavesspeech.ai/v1/auth/login"   # Replace with actual endpoint
+
+headers = {
+
+    "Content-Type": "application/json",
+
+    "Authorization": "Bearer API_KEY_GOES_HERE"
+
+}
+
+payload = {
+
+    "email": "[your_email@example.com](mailto:your_email@example.com)",
+
+    "password": "your_password"
+
+}
+
+response = [requests.post](http://requests.post)(url, json=payload, headers=headers)
+
+print(response.status_code)
+
+print(response.json())
+
+{
+
+  "status": "success",
+
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR...",
+
+  "expires_in": 3600,
+
+  "token_type": "Bearer"
+
+}
