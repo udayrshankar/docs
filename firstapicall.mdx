@@ -1,7 +1,7 @@
 ---
-description: "# Authentication & First API Call
-
-Get started with Waves API in under 5 minutes. Learn how to authenticate and make your first text-to-speech request to generate high-quality audio from text.
+title: "Authentication & First API Call"
+description: "Get started with Waves API in under 5 minutes. Learn how to authenticate and make your first text-to-speech request to generate high-quality audio from text."
+---
 
 ## Authentication Overview
 
@@ -11,27 +11,35 @@ Waves API uses **Bearer token authentication**. All API requests require your AP
 
 ### Step 1: Sign Up or Log In
 
-Visit [waves.smallest.ai](https://waves.smallest.ai) and create an account or log in to your existing account.
+Visit [[waves.smallest.ai](http://waves.smallest.ai)](https://waves.smallest.ai) and create an account or log in to your existing account.
 
 ### Step 2: Generate API Key
 
 1. Navigate to **API Key** tab in your account dashboard (left panel)
+
 2. Click **Create a new API Key**
+
 3. Copy your API key immediately (you won't be able to see it again)
+
 4. Store it securely - treat it like a password
 
 **Security Best Practice**: Store your API key as an environment variable named `SMALLEST_API_KEY` rather than hardcoding it in your application.
 
-```bash
+\`\`\`bash
+
 # Linux/Mac
+
 export SMALLEST_API_KEY="your_api_key_here"
 
 # Windows (Command Prompt)
+
 set SMALLEST_API_KEY=your_api_key_here
 
 # Windows (PowerShell)
-$env:SMALLEST_API_KEY="your_api_key_here"
-```
+
+\$env:SMALLEST_API_KEY="your_api_key_here"
+
+\`\`\`
 
 ## Making Your First API Call
 
@@ -39,192 +47,306 @@ Let's make your first request to convert text to speech using the Lightning mode
 
 ### Endpoint
 
-```
+\`\`\`
+
 POST https://waves-api.smallest.ai/api/v1/lightning/get_speech
-```
+
+\`\`\`
 
 ### Required Headers
 
-```http
+\`\`\`http
+
 Authorization: Bearer YOUR_API_KEY
+
 Content-Type: application/json
-```
+
+\`\`\`
 
 ## Complete Examples
 
 ### cURL
 
-```bash
-curl -X POST https://waves-api.smallest.ai/api/v1/lightning/get_speech \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
+\`\`\`bash
+
+curl -X POST https://waves-api.smallest.ai/api/v1/lightning/get_speech \\
+
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+
+  -H "Content-Type: application/json" \\
+
   -d '{
+
     "voice_id": "emily",
+
     "text": "Hello! This is my first API call with Waves.",
+
     "sample_rate": 24000,
+
     "add_wav_header": true
-  }' \
+
+  }' \\
+
   --output first_audio.wav
-```
+
+\`\`\`
 
 ### Python
 
-```python
+\`\`\`python
+
 import requests
+
 import os
 
 # Get API key from environment variable
+
 api_key = os.environ.get("SMALLEST_API_KEY")
 
 url = "https://waves-api.smallest.ai/api/v1/lightning/get_speech"
 
 headers = {
+
     "Authorization": f"Bearer {api_key}",
+
     "Content-Type": "application/json"
+
 }
 
 payload = {
+
     "voice_id": "emily",
+
     "text": "Hello! This is my first API call with Waves.",
+
     "sample_rate": 24000,
+
     "add_wav_header": True
+
 }
 
-response = requests.post(url, json=payload, headers=headers)
+response = [requests.post](http://requests.post)(url, json=payload, headers=headers)
 
 if response.status_code == 200:
+
     with open("first_audio.wav", "wb") as f:
+
         f.write(response.content)
+
     print("✓ Success! Audio saved to first_audio.wav")
+
 else:
+
     print(f"✗ Error {response.status_code}: {response.text}")
-```
+
+\`\`\`
 
 ### JavaScript (Node.js)
 
-```javascript
+\`\`\`javascript
+
 const fs = require('fs');
 
 const apiKey = process.env.SMALLEST_API_KEY;
 
 async function makeFirstApiCall() {
+
   const response = await fetch('https://waves-api.smallest.ai/api/v1/lightning/get_speech', {
+
     method: 'POST',
+
     headers: {
+
       'Authorization': `Bearer ${apiKey}`,
+
       'Content-Type': 'application/json'
+
     },
+
     body: JSON.stringify({
+
       voice_id: 'emily',
+
       text: 'Hello! This is my first API call with Waves.',
+
       sample_rate: 24000,
+
       add_wav_header: true
+
     })
+
   });
 
   if (response.ok) {
+
     const buffer = await response.arrayBuffer();
+
     fs.writeFileSync('first_audio.wav', Buffer.from(buffer));
+
     console.log('✓ Success! Audio saved to first_audio.wav');
+
   } else {
-    console.log(`✗ Error ${response.status}: ${await response.text()}`);
+
+    console.log`✗ Error ${response.status}: ${await response.text()}`);
+
   }
+
 }
 
 makeFirstApiCall();
-```
+
+\`\`\`
 
 ### JavaScript (Browser)
 
-```javascript
+\`\`\`javascript
+
 const apiKey = 'YOUR_API_KEY'; // In production, get from secure backend
 
 async function makeFirstApiCall() {
+
   const response = await fetch('https://waves-api.smallest.ai/api/v1/lightning/get_speech', {
+
     method: 'POST',
+
     headers: {
+
       'Authorization': `Bearer ${apiKey}`,
+
       'Content-Type': 'application/json'
+
     },
+
     body: JSON.stringify({
+
       voice_id: 'emily',
+
       text: 'Hello! This is my first API call with Waves.',
+
       sample_rate: 24000,
+
       add_wav_header: true
+
     })
+
   });
 
   if (response.ok) {
+
     const blob = await response.blob();
+
     const audioUrl = URL.createObjectURL(blob);
+
     
+
     // Play audio
+
     const audio = new Audio(audioUrl);
-    audio.play();
+
+    [audio.play](http://audio.play)();
+
     
+
     console.log('✓ Success! Playing audio...');
+
   } else {
-    console.log(`✗ Error ${response.status}: ${await response.text()}`);
+
+    console.log`✗ Error ${response.status}: ${await response.text()}`);
+
   }
+
 }
 
 makeFirstApiCall();
-```
+
+\`\`\`
 
 ## Request Parameters
 
 | Parameter | Type | Required | Description |
+
 |-----------|------|----------|-------------|
+
 | `voice_id` | string | Yes | Voice identifier (e.g., "emily", "jasmine", "arman") |
+
 | `text` | string | Yes | Text to convert to speech |
+
 | `sample_rate` | integer | No | Audio quality: `8000`, `16000`, or `24000` Hz (default: `24000`) |
+
 | `add_wav_header` | boolean | No | Add WAV header for easier playback (default: `false`) |
 
 ## Response
 
 **Success (200 OK)**
-```
+
+\`\`\`
+
 Content-Type: audio/wav
+
 Body: [Binary audio data]
-```
+
+\`\`\`
 
 **Authentication Error (401 Unauthorized)**
-```json
+
+\`\`\`json
+
 {
+
   "error": "Invalid or missing API key"
+
 }
-```
+
+\`\`\`
 
 **Validation Error (400 Bad Request)**
-```json
+
+\`\`\`json
+
 {
+
   "error": "Invalid request: missing required field 'text'"
+
 }
-```
+
+\`\`\`
 
 **Rate Limit Error (429 Too Many Requests)**
-```json
+
+\`\`\`json
+
 {
+
   "error": "Rate limit exceeded. Please try again later."
+
 }
-```
+
+\`\`\`
 
 ## Troubleshooting
 
 ### Common Issues
 
 **"Invalid or missing API key"**
+
 - Verify your API key is correct and properly formatted
+
 - Ensure the `Authorization` header includes `Bearer` prefix
+
 - Check that your API key hasn't been revoked
 
 **"Rate limit exceeded"**
+
 - You've sent too many requests in a short time
+
 - Implement exponential backoff and retry logic
+
 - Contact support if you need higher rate limits
 
 **"Invalid voice_id"**
+
 - Use the Get Voices endpoint to fetch available voice IDs: `GET https://waves-api.smallest.ai/api/v1/voices`
+
 - Ensure the voice_id exists and is spelled correctly
 
 ## Security Best Practices
@@ -242,10 +364,13 @@ Body: [Binary audio data]
 ✅ You've successfully authenticated and made your first API call!
 
 **Explore more features:**
+
 - [Browse available voices](https://waves-docs.smallest.ai/api/v1/voices) to find the perfect voice for your use case
+
 - [Try streaming TTS](https://waves-docs.smallest.ai/streaming) for real-time audio generation
+
 - [Clone custom voices](https://waves-docs.smallest.ai/voice-cloning) to create unique brand voices
+
 - [Use the Python SDK](https://github.com/smallest-inc/smallest-python-sdk) for easier integration
 
-**Need help?** Visit [waves-docs.smallest.ai](https://waves-docs.smallest.ai) or contact support at support@smallest.ai"
----
+**Need help?** Visit [[waves-docs.smallest.ai](http://waves-docs.smallest.ai)](https://waves-docs.smallest.ai) or contact support at [support@smallest.ai](mailto:support@smallest.ai)
